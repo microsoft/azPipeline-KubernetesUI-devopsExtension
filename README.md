@@ -1,5 +1,33 @@
 
-# Contributing
+# Azure Pipelines Kubernetes UI
+
+## Overview
+
+This repo contains the code for azure devops extension of kubernetes UI that is being built in repo [azpipelines-kubernetesUI](https://github.com/Microsoft/azpipelines-kubernetesUI).
+
+The main constituent:
+- `AzureDevOpsKubeService` - the ServiceEndpoint based implementation of `IKubeService` that is used in Azure Pipelines
+
+## Build
+
+    npm install
+    npm run build
+
+## Dependencies
+
+This repository depends on the following packages:
+
+- [azure-devops-extension-sdk](https://github.com/Microsoft/azure-devops-extension-sdk): Required module for Azure DevOps extensions which allows communication between the host page and the extension iframe.
+- [azure-devops-extension-api](https://github.com/Microsoft/azure-devops-extension-api): Contains REST client libraries for the various Azure DevOps feature areas.
+- [@kubernetes/client-node](https://github.com/kubernetes-client/javascript): The Javascript clients for Kubernetes implemented in typescript.
+
+Some external dependencies:
+- `React` - Is used to render the UI in the samples, and is a dependency of `azure-devops-ui`.
+- `TypeScript` - Samples are written in TypeScript and complied to JavaScript
+- `SASS` - Extension samples are styled using SASS (which is compiled to CSS and delivered in webpack js bundles).
+- `webpack` - Is used to gather dependencies into a single javascript bundle for each sample.
+
+## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
