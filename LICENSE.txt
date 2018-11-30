@@ -1,4 +1,4 @@
-azpipelines-kubernetesUI
+azPipeline-KubernetesUI-devopsExtension
 
 Copyright (c) Microsoft Corporation. All rights reserved.
 
