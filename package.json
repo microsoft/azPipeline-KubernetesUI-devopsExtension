@@ -32,7 +32,7 @@
     "azure-devops-extension-sdk": "~2.0.3",
     "react": "~16.3.2",
     "react-dom": "~16.3.2",
-    "rubix-kube": "^0.0.3"
+    "rubix-kube": "~0.0.8"
   },
   "devDependencies": {
     "@types/react": "^16.7.6",
