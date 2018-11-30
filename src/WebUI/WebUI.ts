@@ -6,7 +6,7 @@
 import * as React from "react";
 import { showRootComponent } from "../Common";
 import { IKubeService } from "rubix-kube/dist/Contracts/Contracts";
-import { AzureDevOpsKubeService } from "../Service/Service";
+import { AzureDevOpsKubeService } from "../AzureDevOpsService/AzureDevOpsService";
 import { IKubeSummaryProps, KubeSummary } from "rubix-kube/dist/WebUI/Components/KubeSummary";
 
 const service: IKubeService = new AzureDevOpsKubeService("82e34269-de6c-4dfb-aac8-e8d459896a5e", "default");
