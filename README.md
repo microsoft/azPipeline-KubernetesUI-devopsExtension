@@ -3,9 +3,11 @@
 
 ## Overview
 
-This repo contains the code for azure devops extension of kubernetes UI that is being built in repo [azpipelines-kubernetesUI](https://github.com/Microsoft/azpipelines-kubernetesUI).
+This repo contains the code for consuming the kubernetes UI ([azpipelines-kubernetesUI](https://github.com/Microsoft/azpipelines-kubernetesUI)) as an Azure Devops extension. This extension will be available by default in your Azure DevOps accounts going forward.
 
-The main constituent:
+More information on developing extensions can be found at [How to develop extensions](https://docs.microsoft.com/en-us/azure/devops/extend/overview?view=vsts).
+
+This repo mainly contains:
 - `AzureDevOpsKubeService` - the ServiceEndpoint based implementation of `IKubeService` that is used in Azure Pipelines
 
 ## Build
