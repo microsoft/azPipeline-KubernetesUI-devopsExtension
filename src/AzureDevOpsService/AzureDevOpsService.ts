@@ -6,7 +6,7 @@
 import { CommonServiceIds, getClient, IProjectInfo, IProjectPageService } from "azure-devops-extension-api";
 import { DataSourceDetails, ServiceEndpointRequest, ServiceEndpointRestClient } from "azure-devops-extension-api/ServiceEndpoint";
 import * as SDK from "azure-devops-extension-sdk";
-import { KubeResourceType, KubeServiceBase } from "rubix-kube/dist/Contracts/KubeServiceBase";
+import { KubeResourceType, KubeServiceBase } from "@azurepipelines/azdevops-kube-summary/dist/Contracts/KubeServiceBase";
 
 export class AzureDevOpsKubeService extends KubeServiceBase {
     constructor(private _serviceEndpointId: string, private _namespace: string) {
