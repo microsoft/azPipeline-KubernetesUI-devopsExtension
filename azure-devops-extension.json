@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "azPipeline-KubernetesUI-devopsExtension",
     "publisher": "ms",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "name": "Kubernetes Summary",
     "description": "kubernetes summary",
     "public": false,
