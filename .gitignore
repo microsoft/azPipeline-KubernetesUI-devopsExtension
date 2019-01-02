@@ -5,8 +5,10 @@
 
 npm-debug.log
 node_modules/
+_bundles/
 dist/
 *.vsix
+*.tgz
 
 # User-specific files
 *.suo
