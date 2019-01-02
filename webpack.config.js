@@ -1,56 +1,40 @@
-const path = require("path");
-const fs = require("fs");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-
-// Webpack entry points. Mapping from resulting bundle name to the source file entry.
-const entries = {};
-
-// Loop through subfolders in the "src" folder and add an entry for each one
-const srcDir = path.join(__dirname, "src");
-fs.readdirSync(srcDir).filter(dir => {
-    if (fs.statSync(path.join(srcDir, dir)).isDirectory()) {
-        entries[dir] = "./" + path.relative(process.cwd(), path.join(srcDir, dir, dir));
-    }
-});
+const path = require('path');
+const webpack = require('webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
-    entry: entries,
-    output: {
-        filename: "[name]/[name].js"
-    },
-    resolve: {
-        extensions: [".ts", ".tsx", ".js"],
-    },
-    stats: {
-        warnings: false
-    },
-    module: {
-        rules: [
-            {
-                test: /\.tsx?$/,
-                loader: "ts-loader"
-            },
-            {
-                test: /\.scss$/,
-                use: ["style-loader", "css-loader", "azure-devops-ui/buildScripts/css-variables-loader", "sass-loader"]
-            },
-            {
-                test: /\.css$/,
-                use: ["style-loader", "css-loader"],
-            },
-            {
-                test: /\.woff$/,
-                use: [{
-                    loader: 'base64-inline-loader'
-                }]
-            },
-            {
-                test: /\.html$/,
-                loader: "file-loader"
-            }
-        ]
-    },
-    plugins: [
-        new CopyWebpackPlugin([ { from: "**/*.html", context: "src" }])
+  entry: {
+    'kubernetesui-devopsextension': './src/index.ts',
+    'kubernetesui-devopsextension.min': './src/index.ts'
+  },
+  output: {
+    path: path.resolve(__dirname, '_bundles'),
+    filename: '[name].js',
+    libraryTarget: 'umd',
+    library: 'kubernetesui-devopsextension',
+    umdNamedDefine: true
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js']
+  },
+  devtool: 'source-map',
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        sourceMap: true,
+        include: /\.min\.js$/,
+      })
     ]
-};
+  },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        loader: "ts-loader"
+      }
+    ]
+  },
+  node: {
+    fs: 'empty'
+  }
+}
