@@ -1,6 +1,6 @@
 {
   "name": "@azurepipelines/kubernetesui-devopsextension",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "description": "Azure DevOps Kubernetes Summary",
   "repository": {
     "type": "git",
