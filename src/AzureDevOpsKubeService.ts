@@ -4,7 +4,9 @@ export interface IKubeSummaryData {
     pods: string;
     deployments: string;
     services: string;
-    replicasets: string;
+    replicaSets: string;
+    daemonSets: string;
+    statefulSets: string;
 }
 
 export class AzureDevOpsKubeService extends KubeServiceBase {
@@ -21,7 +23,11 @@ export class AzureDevOpsKubeService extends KubeServiceBase {
             case KubeResourceType.Services:
                 return Promise.resolve(JSON.parse(this._kubeSummaryData.services));
             case KubeResourceType.ReplicaSets:
-                return Promise.resolve(JSON.parse(this._kubeSummaryData.replicasets));
+                return Promise.resolve(JSON.parse(this._kubeSummaryData.replicaSets));
+            case KubeResourceType.DaemonSets:
+                return Promise.resolve(JSON.parse(this._kubeSummaryData.daemonSets));
+            case KubeResourceType.StatefulSets:
+                return Promise.resolve(JSON.parse(this._kubeSummaryData.statefulSets));
         }
     }
 }
