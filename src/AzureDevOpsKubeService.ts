@@ -17,17 +17,17 @@ export class AzureDevOpsKubeService extends KubeServiceBase {
     fetch(resourceType: KubeResourceType): Promise<any> {
         switch (resourceType) {
             case KubeResourceType.Pods:
-                return resolvePromise(this._kubeSummaryData.pods);
+                return Promise.resolve(safeParseJson(this._kubeSummaryData.pods));
             case KubeResourceType.Deployments:
-                return resolvePromise(this._kubeSummaryData.deployments);
+                return Promise.resolve(safeParseJson(this._kubeSummaryData.deployments));
             case KubeResourceType.Services:
-                return resolvePromise(this._kubeSummaryData.services);
+                return Promise.resolve(safeParseJson(this._kubeSummaryData.services));
             case KubeResourceType.ReplicaSets:
-                return resolvePromise(this._kubeSummaryData.replicaSets);
+                return Promise.resolve(safeParseJson(this._kubeSummaryData.replicaSets));
             case KubeResourceType.DaemonSets:
-                return resolvePromise(this._kubeSummaryData.daemonSets);
+                return Promise.resolve(safeParseJson(this._kubeSummaryData.daemonSets));
             case KubeResourceType.StatefulSets:
-                return resolvePromise(this._kubeSummaryData.statefulSets);
+                return Promise.resolve(safeParseJson(this._kubeSummaryData.statefulSets));
         }
 
         return Promise.resolve({});
@@ -44,8 +44,4 @@ function safeParseJson(input?: string): any {
     }
 
     return output;
-}
-
-function resolvePromise(input: any): Promise < any > {
-    return Promise.resolve(safeParseJson(input));
 }
