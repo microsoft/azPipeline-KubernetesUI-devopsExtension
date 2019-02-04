@@ -17,17 +17,31 @@ export class AzureDevOpsKubeService extends KubeServiceBase {
     fetch(resourceType: KubeResourceType): Promise<any> {
         switch (resourceType) {
             case KubeResourceType.Pods:
-                return Promise.resolve(JSON.parse(this._kubeSummaryData.pods));
+                return Promise.resolve(safeParseJson(this._kubeSummaryData.pods));
             case KubeResourceType.Deployments:
-                return Promise.resolve(JSON.parse(this._kubeSummaryData.deployments));
+                return Promise.resolve(safeParseJson(this._kubeSummaryData.deployments));
             case KubeResourceType.Services:
-                return Promise.resolve(JSON.parse(this._kubeSummaryData.services));
+                return Promise.resolve(safeParseJson(this._kubeSummaryData.services));
             case KubeResourceType.ReplicaSets:
-                return Promise.resolve(JSON.parse(this._kubeSummaryData.replicaSets));
+                return Promise.resolve(safeParseJson(this._kubeSummaryData.replicaSets));
             case KubeResourceType.DaemonSets:
-                return Promise.resolve(JSON.parse(this._kubeSummaryData.daemonSets));
+                return Promise.resolve(safeParseJson(this._kubeSummaryData.daemonSets));
             case KubeResourceType.StatefulSets:
-                return Promise.resolve(JSON.parse(this._kubeSummaryData.statefulSets));
+                return Promise.resolve(safeParseJson(this._kubeSummaryData.statefulSets));
         }
+
+        return Promise.resolve({});
     }
+}
+
+function safeParseJson(input?: string): any {
+    let output = {};
+    if (input) {
+        try {
+            output = JSON.parse(input) || {};
+        }
+        catch (e) { }
+    }
+
+    return output;
 }
