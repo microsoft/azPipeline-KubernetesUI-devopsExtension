@@ -36,5 +36,8 @@ module.exports = {
   },
   node: {
     fs: 'empty'
+  },
+  externals: {
+    "@azurepipelines/azdevops-kube-summary": "@azurepipelines/azdevops-kube-summary"
   }
 }
