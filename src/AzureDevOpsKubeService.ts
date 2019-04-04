@@ -10,7 +10,10 @@ export interface IKubeSummaryData {
 }
 
 export class AzureDevOpsKubeService extends KubeServiceBase {
-    constructor(private _kubeSummaryData: IKubeSummaryData, private _fetchKubernetesObjects: (o: string) => Promise<IKubeSummaryData>) {
+    constructor(
+        private _kubeSummaryData: IKubeSummaryData,
+        private _fetchKubernetesObjects: (o: string, p?: { [key: string]: string }) => Promise<IKubeSummaryData>
+    ) {
         super();
 
         const kubeObjectsToFetch: string[] = ["daemonSets", "statefulSets", "pods", "services"];
@@ -18,7 +21,7 @@ export class AzureDevOpsKubeService extends KubeServiceBase {
         this._dataPromise = this._fetchKubernetesObjects(queryString);
     }
 
-    fetch(resourceType: KubeResourceType): Promise<any> {
+    fetch(resourceType: KubeResourceType, labelSelector?: string): Promise<any> {
         switch (resourceType) {
             case KubeResourceType.Deployments:
                 return Promise.resolve(safeParseJson(this._kubeSummaryData.deployments));
@@ -34,7 +37,29 @@ export class AzureDevOpsKubeService extends KubeServiceBase {
                 });
             case KubeResourceType.Pods:
                 return this._dataPromise.then((queryResult) => {
-                    return safeParseJson(queryResult.pods);
+                    let podList = safeParseJson(queryResult.pods);
+                    // filter the pods to suit to given filter
+                    if (labelSelector) {
+                        // get all label filter and then check each pod to suit to that filter
+                        let pods: any[] = [];
+                        const originalPods = podList.items || [];
+                        const labelDict = this._getLabelDict(labelSelector);
+                        originalPods.forEach(pod => {
+                            if (pod && pod.metadata && pod.metadata.labels) {
+                                const matched = Object.keys(labelDict).every(key => {
+                                    return pod.metadata.labels[key].toLocaleLowerCase() === labelDict[key].toLocaleLowerCase();
+                                });
+
+                                if (matched) {
+                                    pods.push(pod);
+                                }
+                            }
+                        });
+
+                        podList.items = pods;
+                    }
+
+                    return podList;
                 });
             case KubeResourceType.Services:
                 return this._dataPromise.then((queryResult) => {
@@ -43,6 +68,27 @@ export class AzureDevOpsKubeService extends KubeServiceBase {
         }
 
         return Promise.resolve({});
+    }
+
+    public getPodLog(podName: string): Promise<string> {
+        let params: { [key: string]: string } = {};
+        params["podname"] = podName;
+        return this._fetchKubernetesObjects("podLog", params).then(output => (output as any).podLog);
+    }
+
+    private _getLabelDict(labelSelector: string): { [key: string]: string } {
+        let labelDict: { [key: string]: string } = {};
+        const labels: string[] = labelSelector.split(",");
+        if (labels && labels.length > 0) {
+            labels.forEach(label => {
+                const keyValue: string[] = label.split("=");
+                if (keyValue && keyValue.length === 2) {
+                    labelDict[keyValue[0]] = keyValue[1];
+                }
+            });
+        }
+
+        return labelDict;
     }
 
     private _dataPromise: Promise<IKubeSummaryData>;
