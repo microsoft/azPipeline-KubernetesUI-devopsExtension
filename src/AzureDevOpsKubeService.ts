@@ -46,7 +46,10 @@ export class AzureDevOpsKubeService extends KubeServiceBase {
                         const labelDict = this._getLabelDict(labelSelector);
                         originalPods.forEach(pod => {
                             if (pod && pod.metadata && pod.metadata.labels) {
-                                const matched = Object.keys(labelDict).every((key) => pod.metadata.labels[key] === labelDict[key]);
+                                const matched = Object.keys(labelDict).every(key => {
+                                    return pod.metadata.labels[key].toLocaleLowerCase() === labelDict[key].toLocaleLowerCase();
+                                });
+
                                 if (matched) {
                                     pods.push(pod);
                                 }
