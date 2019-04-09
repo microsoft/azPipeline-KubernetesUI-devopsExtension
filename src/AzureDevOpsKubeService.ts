@@ -70,9 +70,10 @@ export class AzureDevOpsKubeService extends KubeServiceBase {
         return Promise.resolve({});
     }
 
-    public getPodLog(podName: string): Promise<string> {
+    public getPodLog(podName: string, podContainerName?: string): Promise<string> {
         let params: { [key: string]: string } = {};
         params["podname"] = podName;
+        params["podcontainername"] = podContainerName || "";
         return this._fetchKubernetesObjects("podLog", params).then(output => (output as any).podLog);
     }
 
