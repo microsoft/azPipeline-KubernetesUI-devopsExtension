@@ -25,7 +25,7 @@
     "_bundles"
   ],
   "dependencies": {
-    "@azurepipelines/azdevops-kube-summary": "^2.3.0"
+    "@azurepipelines/azdevops-kube-summary": "^3.2.0"
   },
   "devDependencies": {
     "rimraf": "^2.6.3",
