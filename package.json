@@ -29,11 +29,11 @@
   },
   "devDependencies": {
     "rimraf": "^2.6.3",
-    "ts-loader": "~5.2.2",
+    "ts-loader": "~9.4.2",
     "typescript": "^3.3.3333",
     "uglifyjs-webpack-plugin": "^2.1.2",
-    "webpack": "^4.29.5",
-    "webpack-cli": "^3.2.3"
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   },
   "bugs": {
     "url": "https://github.com/Microsoft/azPipeline-KubernetesUI-devopsExtension/issues"
